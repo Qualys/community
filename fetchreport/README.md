@@ -139,5 +139,5 @@ While the report is running, you can view the report status in the QualysGuard U
 
 The report will be available in the QualysGuard Report Share until it expires automatically – 7 days after its creation date.
 
-   [1]: https://community.qualys.com/servlet/JiveServlet/downloadImage/2725/Screen%2BShot%2B2011-12-28%2Bat%2B18.28.46%2B.png
-   [2]: https://community.qualys.com/servlet/JiveServlet/downloadImage/2726/Screen%2BShot%2B2011-12-28%2Bat%2B19.13.03%2B.png
+   [1]: Screen%2BShot%2B2011-12-28%2Bat%2B18.28.46%2B.png
+   [2]: Screen%2BShot%2B2011-12-28%2Bat%2B19.13.03%2B.png
