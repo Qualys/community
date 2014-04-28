@@ -47,7 +47,7 @@ Please Note: Before you begin, please find your QualysGuard API server URL. To r
 
 To use fetchreport.pl you must identify the report template ID for the automatic scan report you would like to download.&nbsp; The QualysGuard UI provides this information. Follow the step of the screenshote below to get the report template ID.
 
-![Screen Shot 2011-12-28 at 18.28.46 .png][1]
+![Image](Screen Shot 2011-12-28 at 18.28.46 .png)
 
 The QualysGuard API function “report_template_list.php” provides a list of report template in your account including report template IDs. If your account is on the QualysGuard US platform, you can make a report list request using a URL like this: 
 
@@ -79,7 +79,7 @@ perl fetchreport.pl
 
 The options for running the script will then be displayed as shown below.
 
-![Screen Shot 2011-12-28 at 19.13.03 .png][2]
+![Image](Screen Shot 2011-12-28 at 19.13.03 .png)
 
 Required Arguments:
 
@@ -138,6 +138,3 @@ Sample:
 While the report is running, you can view the report status in the QualysGuard UI in the Report Share section (select Report on the left menu). When the report completes, the script automatically downloads the report and places it in the specified directory with.
 
 The report will be available in the QualysGuard Report Share until it expires automatically – 7 days after its creation date.
-
-   [1]: Screen%2BShot%2B2011-12-28%2Bat%2B18.28.46%2B.png?raw=true
-   [2]: Screen%2BShot%2B2011-12-28%2Bat%2B19.13.03%2B.png?raw=true
