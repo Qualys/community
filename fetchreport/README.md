@@ -11,7 +11,8 @@ This is a major rewrite of this tool, hence moving to version 7_beta. We found i
 In addition, when a report takes too much time to be generated and to avoid potential session timeout when using session based authentication, the default authentication method is now BASIC.
 
 Support of CSV reports has been also added and proxy authentication is now supported via the option:
-`--proxy=http://PROXY_USER:PROXY_PASSWORD@PROXY_SERVER:PROXY_PORT`
+
+	--proxy=http://PROXY_USER:PROXY_PASSWORD@PROXY_SERVER:PROXY_PORT
 
  
 
