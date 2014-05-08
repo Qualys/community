@@ -1,0 +1,165 @@
+###### if you want to have your own values for the following values, replace it with  value including the { ... } braces. 
+###### For example if you want your own problem.type type your value in place of { $problem_type }. Make sure not to include { and } in your value.
+
+############################################
+# tic_severity =  { if ($severity == 5) {
+#                  'Priority 1';
+#             } elsif ($severity == 4) {
+#                  'Priority 2';
+#            } elsif ($severity == 3) {
+#                  'Priority 3';
+#          }
+#}
+############################################
+
+# -------------------------------------------------------------	------------------------
+# XPATH for ticket_info.php					tne variable
+# -------------------------------------------------------------	------------------------
+# TICKET/NUMBER   						$tic_num
+# TICKET/CREATION_DATETIME   					$tic_date
+# TICKET/CURRENT_STATE   					$tic_state
+# TICKET/ASSIGNEE/NAME   					$tic_assignee_name
+# TICKET/ASSIGNEE/EMAIL   					$tic_assignee_email
+# TICKET/ASSIGNEE/LOGIN   					$tic_assignee_login
+# TICKET/DETECTION/IP   					$tic_det_ip
+# TICKET/DETECTION/DNSNAME   					$tic_det_dns
+# TICKET/DETECTION/NBHNAME   					$tic_det_nbh
+# TICKET/DETECTION/PORT   					$tic_det_port
+# TICKET/DETECTION/SERVICE   					$tic_det_service
+# TICKET/DETECTION/PROTOCOL   					$tic_det_protocol
+# TICKET/DETECTION/FQDN   					$tic_det_fqdn
+# TICKET/DETECTION/SSL   					$tic_det_ssl
+# TICKET/VULNINFO/TITLE   					$tic_vuln_title
+# TICKET/VULNINFO/TYPE   					$tic_vuln_type
+# TICKET/VULNINFO/QID   					$tic_vuln_qid
+# TICKET/VULNINFO/SEVERITY   					$tic_vuln_sev
+# TICKET/VULNINFO/STANDARD_SEVERITY   				$tic_vuln_st_sev
+# TICKET/DETAILS/DIAGNOSIS   					$tic_det_dia
+# TICKET/DETAILS/CONSEQUENCE   					$tic_det_cons
+# TICKET/DETAILS/SOLUTION   					$tic_det_sol
+# TICKET/DETAILS/RESULT   					$tic_det_result
+
+# -------------------------------------------------------------	------------------------
+## ASSET RANGE INFO
+# -------------------------------------------------------------	------------------------
+# HOST_LIST/HOST/IP    						$host_ip
+# HOST_LIST/HOST/TRACKING_METHOD    				$host_trac_meth
+# HOST_LIST/HOST/DNS    					$host_dns
+# HOST_LIST/HOST/NETBIOS    					$host_netbios
+# HOST_LIST/HOST/OPERATING_SYSTEM    				$host_op_sys
+# HOST_LIST/HOST/ASSET_GROUPS/ASSET_GROUP_TITLE/TITLE    	$asset_gr_title
+# 
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/QID    		$vuln_info_qid
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/TYPE    		$vuln_info_type
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/PORT    		$vuln_info_port
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/SERVICE    		$vuln_info_service
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/FQDN    		$vuln_info_fqdn
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/PROTOCOL    		$vuln_info_protocol
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/SSL    		$vuln_info_ssl
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/RESULT    		$vuln_info_result
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/FIRST_FOUND    	$vuln_info_fir_found
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/LAST_FOUND    	$vuln_info_las_found
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/TIMES_FOUND    	$vuln_info_times_found
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/VULN_STATUS    	$vuln_info_status
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/TICKET_NUMBER    	$vuln_info_tic_num
+# HOST_LIST/HOST/VULN_INFO_LIST/VULN_INFO/TICKET_STATE    	$vuln_info_tic_state
+#
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/QID/CONTENT   	$vuln_det_qid_cont
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/QID/ID   		$vuln_det_qid_id
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/SEVERITY   		$vuln_det_qid_sev
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/CATEGORY   		$vuln_det_qid_cat
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/CUSTOMIZED   		$vuln_det_qid_cus
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/THREAT   		$vuln_det_qid_threat
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/IMPACT   		$vuln_det_qid_impact
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/SOLUTION   		$vuln_det_qid_sol
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/COMPLIANCE   		$vuln_det_qid_comp
+# GLOSSARY/VULN_DETAILS_LIST/VULN_DETAILS/LAST_UPDATE   	$vuln_det_qid_update
+# VULN_DETAILS/CVSS_SCORE/CVSS_TEMPORAL   			$vuln_det_qid_cvss_temp
+# VULN_DETAILS/CVSS_SCORE/CVSS_BASE   				$vuln_det_qid_cvss_base
+# VULN_DETAILS/VENDOR_REFERENCE_LIST/VENDOR_REFERENCE/URL	$vuln_det_qid_vend_url
+# VULN_DETAILS/VENDOR_REFERENCE_LIST/VENDOR_REFERENCE/ID  	$vuln_det_qid_vend_id
+# VULN_DETAILS/CVE_ID_LIST/CVE_ID/URL ID   			$vuln_det_qid_cve_id
+# VULN_DETAILS/BUGTRAQ_ID_LIST/BUGTRAQ_ID/URL   		$vuln_det_qid_bug_url
+# VULN_DETAILS/BUGTRAQ_ID_LIST/BUGTRAQ_ID/ID   			$vuln_det_qid_bug_id
+# 
+
+[SUBJECT]
+
+QualysGuard Ticket:{$tic_num} for QID:{$tic_vuln_qid} on IP:{$tic_det_ip}
+
+
+[BODY]
+SC_type:pmo
+SC_priority:{$vuln_det_qid_sev}
+SC_user:imcportal
+SC_producttype:Qualys
+SC_problemtype:Vulnerability
+SC_contactname:{$tic_assignee_name}
+SC_company:{$asset_gr_title}
+SC_contactemail:{$tic_assignee_email}
+SC_description:
+
+{$newline}
+{$tic_num }
+{$tic_vuln_title }
+{$tic_det_ip }
+{$tic_det_dns }
+{$tic_det_nbh }
+{$tic_det_port }
+{$tic_det_service }
+{$tic_det_protocol }
+{$tic_det_fqdn }
+{$tic_det_ssl }
+{$tic_vuln_title }
+{$tic_vuln_type }
+{$tic_vuln_qid }
+{$tic_vuln_sev }
+{$tic_vuln_st_sev }
+{$vuln_det_qid_cvss_temp}
+{$vuln_det_qid_cvss_base }
+
+
+{$newline} 
+========================================================================
+{$newline} 
+TICKET/DETAILS/DIAGNOSIS  				
+{$tic_det_dia }
+
+{$newline} 
+TICKET/DETAILS/CONSEQUENCE				
+{$tic_det_cons }
+
+{$newline} 
+TICKET/DETAILS/SOLUTION   				
+{$tic_det_sol }
+
+{$newline} 
+TICKET/DETAILS/RESULT     				
+{$tic_det_result }
+
+
+==================
+Date: {$tic_date}
+==================
+Problem Type:  {$vuln_det_qid_cat}
+Priority:      {if ($qg_severity == 5) {
+                  'Priority 1';
+           } elsif ($qg_severity == 4) {
+                  'Priority 2';
+           } elsif ($qg_severity == 3) {
+                  'Priority 3';
+           }
+}
+
+
+VULN_DETAILS/VENDOR_REFERENCE_LIST/VENDOR_REFERENCE/URL 
+{$vuln_det_qid_vend_url }
+VULN_DETAILS/VENDOR_REFERENCE_LIST/VENDOR_REFERENCE/ID 	
+{$vuln_det_qid_vend_id }
+VULN_DETAILS/CVE_ID_LIST/CVE_ID/URL ID  				
+{$vuln_det_qid_cve_id }
+VULN_DETAILS/BUGTRAQ_ID_LIST/BUGTRAQ_ID/URL  			
+{$vuln_det_qid_bug_url }
+VULN_DETAILS/BUGTRAQ_ID_LIST/BUGTRAQ_ID/ID 				
+{$vuln_det_qid_bug_id }
+

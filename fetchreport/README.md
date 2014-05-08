@@ -65,7 +65,7 @@ Installation and Configuration Process
   * CPAN is installed and configured for Unix or Linux based systems
   * PPM is installed and configured for Windows systems (installed by default with ActivePerl)
 
-## Perl Module Installation:
+# Perl Module Installation:
 
 [TO BE COMPLETED WITH A LINK TO A GENERIC DOCUMENT EXPLAINING THE PROCESS THAT IS APPLICABLE FOR ALL QUALYS PERL SCRIPTS]
 
