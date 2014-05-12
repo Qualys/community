@@ -3,7 +3,7 @@ community
 
 # Important
 
-Qualys community open source scripts.
+This directory contains Qualys community open source scripts. The sample code demonstrates the functionality of the QualysGuard API. Several sample scripts are provided to show how to use API features to perform network security audits and vulnerability management.
 
 These scripts are unsupported and are provided as proof-of-concept only.Scripts options and details are availalable via `--help`.
 
