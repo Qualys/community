@@ -85,7 +85,7 @@ A poor man's "Open Ports and Services" report.
 ## [purgeUnscannedHosts](purgeUnscannedHosts)
 Purges the automatic data for all hosts not scanned since a particular date/in XX days.
 
-## [scanner_report](scanner_report)
+## [scanner_details](scanner_details)
 
 Output the complete scanner details as they are available in the GUI.
 
