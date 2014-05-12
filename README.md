@@ -55,37 +55,50 @@ Demonstrates how to interact with the QualysGuard network map functions includin
 Demonstrates how to interact with the QualysGuard scan functions including: Launch a scan, launch a scan and save the report on the QualysGuard server, list saved scan reports, retrieve a saved scan report, list scans in progress, and cancel a running scan. 
 
 ## installedSoftware
+
 Generates a list of all installed software in the environment.
 
 ## kbstats
+
 Gets more detailed statistics on the KB, including counts by category, total Bugtraq items, etc.
 
 ## lastScanInfo
+
 Gets the last scan time and scanner for the specified IP.
 
 ## notScannedSince
+
 Find all assets not scanned within a number of days specified and add them to a group.
 
 ## numhop_v3
+
 Gets traceroute information for specified asset groups and timeframe and calculates useful stats.
 
 ## pcidl
+
 Downloads the QID, name, and CVSS base score of all PCI vulnerabilities in the KB (those that will cause a PCI failure).
 
 ## portReport
+
 A poor man's "Open Ports and Services" report.
 
 ## purgeUnscannedHosts
 Purges the automatic data for all hosts not scanned since a particular date/in XX days.
+
+## scanner_report
+
+Output the complete scanner details as they are available in the GUI.
 
 ## scanoptions
 
 This script demonstrates how to interact with scan service options. The following options may be set: Scan dead hosts, ports to scan, and scan hosts behind a load balancer. 
 
 ## scanStats
+
 Downloads scheduled tasks and look for sub-optimal scanner loads.
 
 ## scanTimesv2
+
 A script to parse the results of QID 45038 (Host Scan Time) and calculate the average scan time. It will also call out the IP and OS of systems that take abnormally long.
 
 ## scheduledscans
