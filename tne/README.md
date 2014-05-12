@@ -43,7 +43,7 @@ Install the configuration files:
 
 	rpm -ivh TNE_conf_smtp-x.y.z-n.rpm
 
-## Configuration
+## Configuration Files
 
 Set up configuration files.
 
@@ -227,61 +227,56 @@ to change. The parameters are listed below by section.
     vendor_ref_contains=
     
 ### Configure TNE TEMPLATE file
-( /usr/local/tne/conf/tne.tmpl )
-tne.tmpl contains the values from Qualys Guard.
-The values start with $. For example the value of ticket number is
-$tic_num. If you want this value, just insert in [BODY] section like
-{ $tic_num }. Make sure you include { and }.
 
-One more example:
+	/usr/local/tne/conf/tne.tmpl
+
+File tne.tmpl contains the values from Qualys Guard. The values start with $. For example the value of ticket number is $tic_num. If you want this value, just insert in [BODY] section like { $tic_num }. Make sure you include { and }.
+
+Example:
 
 If you want the reverse value of QG severity or if you want to call with some
-other name, it can be done like
+other name, it can be done like below.
 
-my_severity_number = { if ($qg_severity == 5) {
-     '1';
-  }
-}
+	my_severity_number = { 
+	if ($qg_severity == 5) {
+	     '1';
+	  }
+	}
+
 or
-my_severity_text = { if ($qg_severity == 5) {
-     'blocker';
-  }
-}
 
-Whatever you insert between [SUBJECT] and [BODY] will be taken as
-subject for your email.
-Whatever you insert below [BODY] will be taken as body for your email.
+	my_severity_text = { if ($qg_severity == 5) {
+	     'blocker';
+	  }
+	}
+
+Whatever you insert between [SUBJECT] and [BODY] will be taken as subject for your email. Whatever you insert below [BODY] will be taken as body for your email.
 
 The text above [SUBJECT] is for your reference. 
-###########################################################
 
-5. To validate the template format, you can run tne.pl in a test mode
+### Validate Template Format
 
-cd /usr/local/qualys/tne/bin
-perl tne.pl --test-mode
+To validate the template format, you can run tne.pl in a test mode
 
-This will generate one ticket and send it to the to: email specified in the
-[TEST_TICKETS] section.
+    cd /usr/local/qualys/tne/bin
+    perl tne.pl --test-mode
 
+This will generate one ticket and send it to the to: email specified in the [TEST_TICKETS] section.
 
-##########################################################
+### Set Ownership
 
-6. Change ownership to the user and group that TNE will
-actually run as.
+Change ownership to the user and group that TNE will actually run as. Ensure the user and group exists before running this command. 
 
-Ensure the user and group exists before running this command.
 For example, if TNE will run as user: tne, group: root
 
-chown -R tne:root /usr/local/qualys/tne
+    chown -R tne:root /usr/local/qualys/tne
 
-###########################################################
+### Scheduler Configuration
 
-7. Create a scheduler entry for tne.pl
+Create a scheduler entry for tne.pl.
+
 Insert the following in the crontab to run the tne script at 22:00hrs every day.
 
-$crontab -e
-
-00 22 * * * root /usr/bin/perl /usr/local/qualys/tne/bin/tne.pl >> /usr/local/qualys/tne/bin/logs/output.txt
-
-
-###########################################################
+    $crontab -e
+    
+    00 22 * * * root /usr/bin/perl /usr/local/qualys/tne/bin/tne.pl >> /usr/local/qualys/tne/bin/logs/output.txt
