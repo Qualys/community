@@ -109,7 +109,7 @@ This script demonstrates how to define scan or map tasks to occur on a regular b
 
 This script, like vulnsummary, demonstrates how to connect to the QualysGuard API, and how to extract and display data from the scan report XML document.
 
-## [Ticket Notification Engine (TNE)](Ticket Notification Engine (TNE))
+## [Ticket Notification Engine (TNE)](tne)
 
 Qualys provides a Ticket Notification Engine (TNE) that outputs SMTP messages based on XML versions of individual tickets in QualysGuard that are consumable by Remedy ticketing systems. The TNE can also be configured to support some customization to support the receiving ticketing system.
 
