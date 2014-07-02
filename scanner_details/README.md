@@ -1,3 +1,6 @@
+scanner_details
+===============
+
 Output the complete scanner details as they are available in the GUI.  The IP and VLAN info will be included. 
 
 The XML output of the script will look like this:
