@@ -117,7 +117,9 @@ while (<STOREFILE>) {
 		logout();
 	}
 	my $content = $RESULT->content;
-	open( XMLOUT, ">authcode_output.xml" );
+	# Append the file each run through so we hve all the XML post run if needed for someone reason
+	# Note running again will  overwrite
+	open( XMLOUT, ">>authcode_output.xml" );
 	print XMLOUT $content;
 	print XMLLOG $content;
 	close XMLOUT;
