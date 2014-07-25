@@ -97,7 +97,7 @@ die("Logout failed with info:\n".Dumper($RESPONSE)) unless ($RESPONSE->is_succes
 # 
 login();
 
-open (STOREFILE, "stores.csv") or die "Store.csv not found\n";
+open (STOREFILE, "stores.csv") or die "stores.csv not found\n";
 open (ACT_CODES, ">activationcodes.csv") or die "Couldnt open activationcodes.csv\n";
 open (XMLLOG, ">scannersetup.txt") or die ("Couldn't open scannersetup.txt");
 while (<STOREFILE>) {
