@@ -9,7 +9,7 @@ Written to help a customer who wanted to deploy thousands of virtual scanners to
 
 Output is storesconfig.csv
 
-ovf_brew-dsitrib.sh
+ovf_brew-distrib.sh
 ==============
 Example shell code utilizing VMWARE PowerCLI extensions to deploy the scanners into remote locations ESXi servers and spin up the VM's.  Probably need customization for your environment
 
