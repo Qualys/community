@@ -14,13 +14,13 @@
 VCLI_PATH=/root/vmware-vsphere-cli-distrib/bin
 OVFT_PATH=/usr/bin
 
-VI_SERVER=iscanlab.dev.qualys.com
+VI_SERVER=
 VI_USERNAME=root
 VI_PASSWORD='*'
 VI_LOCATOR="--server $VI_SERVER --username $VI_USERNAME --password $VI_PASSWORD"
 DS="iscanlab:datastore2"
-VC_SERVER=vcenter.vuln.qa.qualys.com
-VC_USERNAME=gakimov
+VC_SERVER=
+VC_USERNAME=
 VC_PASSWORD='*'
 
 VC_LOCATOR="vi://$VC_USERNAME:$VC_PASSWORD@$VC_SERVER/DEV/ML_DEV/host/$VI_SERVER"
