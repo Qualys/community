@@ -11,7 +11,7 @@ Output is storesconfig.csv
 
 configscanner.pl
 ==============
-For coniurring the scanners defined with the setupscanner.pl script, this will create the asset groups, assign the scanner to that AG, setup VLAN's appropriately, and get it ready to scan.  Provided as example only, will need customization for YOUR environment.
+For configuring the scanners defined with the setupscanner.pl script, this will create the asset groups, assign the scanner to that AG, setup VLAN's appropriately, and get it ready to scan.  Provided as example only, will need customization for YOUR environment.
 
 ovf_brew-distrib.sh
 ==============
