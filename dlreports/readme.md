@@ -5,11 +5,11 @@ Before using these scripts you must setup the set of 3 reports (one Scorecard, O
 cr.pl
 ==========
 
-THis script combines the reports downloaded with dlrepots.pl and combines them into a single Excel spreadsheet.  Some processing is done to build Summary and Patch tabs in addition to the raw CSV data from the reports themselves.  Customize this for your environment.
+This script combines the reports downloaded with dlrepots.pl and combines them into a single Excel spreadsheet.  Some processing is done to build Summary and Patch tabs in addition to the raw CSV data from the reports themselves.  Customize this for your environment.
 
 dlreports.pl
 ===========
-Downaods the latest Scorecard, patch, and Vuln report for a given subset of Asset Groups or Tags. 
+Downloads the latest Scorecard, patch, and Vuln report for a given subset of Asset Groups or Tags. 
 
 DataCenter Linux Shell Script (dc_linux.sh)
 ===========
