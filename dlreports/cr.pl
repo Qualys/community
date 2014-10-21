@@ -3,7 +3,7 @@
 use strict;
 use Getopt::Std;
 use Excel::Writer::XLSX;
-use Text::CSV;
+use Text::CSV_XS;
 use File::Copy;
 
 sub usage()
@@ -57,7 +57,7 @@ else { $VULNFILE = $opt{v}; }
 our $LINE = 0; my $FOUND = 0;
 
 # should set binary attribute
-my $csv = Text::CSV->new ( { binary => 1 } ) or die "Cannot use CSV: ".Text::CSV->error_diag (); 
+my $csv = Text::CSV_XS->new ( { binary => 1 } ) or die "Cannot use CSV: ".Text::CSV->error_diag (); 
 
 #Create the Workbook and setup the worksheets... Creation order here will 
 # be the order the worksheets appear.  We'll rename it when we are done.
