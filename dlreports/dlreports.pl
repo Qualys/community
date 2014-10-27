@@ -14,7 +14,7 @@ BEGIN {
 sub usage()
 {
 print STDERR << "EOF";
-$0 : A program to setup one or more virtual scanners in the Qualys portal.
+$0 : A program to download reports from the Qualys portal.
 	
 usage : $0 [-enh]
 	
@@ -24,7 +24,7 @@ usage : $0 [-enh]
 -p  : Qualyguard API User Password
 -h 	: this (help) output
 	
-example : $0 -e QA
+example : $0 -e QA -n "DataCenter Linux"
 	
 EOF
 exit;
