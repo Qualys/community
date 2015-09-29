@@ -33,7 +33,7 @@ $FULLPULL = 1 if defined $opt{f};
 $DATE = $opt{d} if defined $opt{d};
 
 our $APIURL = "https://qualysapi.qg2.apps.qualys.com";
-our $API_USER = "barca2el"; our $API_PWD = "S3llS3llS3ll";
+our $API_USER = "XXXXXXX"; our $API_PWD = "XXXXXXXX";
 
 our $UA; our $RESPONSE; 
 
