@@ -13,3 +13,6 @@ This script relies on several freely available modules from CPAN. You will need 
 
   * Data::Dumper — basic Datadump module
   
+multi_thread_hd.py
+------------------
+Example code for pulling the host detection data in multi thhreads using a simple queing system in python
