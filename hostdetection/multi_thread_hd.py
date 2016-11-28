@@ -340,7 +340,7 @@ def parse_options():
     help="Number of threads to fetch host detections")
     parser.add_option("-c", "--CHUNK_SIZE", dest="CHUNK_SIZE", default=1000,\
     help="Size of ID range chunks")
-    (options, ) = parser.parse_args()
+    (options, values) = parser.parse_args()
     SERVER_ROOT = options.server
     API_USERNAME = options.username
     API_PASSWORD = options.password
