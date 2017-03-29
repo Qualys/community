@@ -51,8 +51,6 @@
         "auth": {
           "type": "basic",
           "basic": {
-            "username": "quays_el26",
-            "password": "k1llTrump",
             "saveHelperData": true,
             "showPassword": false
           }
@@ -72,7 +70,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
@@ -125,7 +123,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
@@ -209,7 +207,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "",
             "description": ""
           }
         ],
@@ -241,7 +239,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "",
             "description": ""
           }
         ],
@@ -266,8 +264,6 @@
         "auth": {
           "type": "basic",
           "basic": {
-            "username": "quays_el26",
-            "password": "k1llTrump",
             "saveHelperData": true,
             "showPassword": false
           }
@@ -282,7 +278,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
@@ -329,7 +325,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
@@ -413,7 +409,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
@@ -460,7 +456,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "",
             "description": ""
           }
         ],
@@ -497,7 +493,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "",
             "description": ""
           }
         ],
@@ -544,7 +540,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
@@ -628,7 +624,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "",
             "description": ""
           }
         ],
@@ -675,7 +671,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "",
             "description": ""
           }
         ],
@@ -712,7 +708,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "",
             "description": ""
           }
         ],
@@ -759,7 +755,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
@@ -875,8 +871,8 @@
         "auth": {
           "type": "basic",
           "basic": {
-            "username": "quays_el26",
-            "password": "k1llTrump",
+            "username": "",
+            "password": "",
             "saveHelperData": true,
             "showPassword": false
           }
@@ -891,7 +887,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
@@ -929,7 +925,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "",
             "description": ""
           }
         ],
