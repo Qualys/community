@@ -309,8 +309,8 @@
         "auth": {
           "type": "basic",
           "basic": {
-            "username": "quays_el26",
-            "password": "k1llTrump",
+            "username": "",
+            "password": "",
             "saveHelperData": true,
             "showPassword": false
           }
