@@ -978,10 +978,14 @@
         "method": "POST",
         "header": [
           {
-            "key": "//action",
+            "key": "action",
             "value": "POSTMAN",
-            "description": "",
-            "disabled": true
+            "description": ""
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded",
+            "description": ""
           },
           {
             "key": "Authorization",
@@ -1031,6 +1035,12 @@
             {
               "key": "port",
               "value": "1521",
+              "type": "text",
+              "enabled": true
+            },
+            {
+              "key": "action",
+              "value": "create",
               "type": "text",
               "enabled": true
             }
