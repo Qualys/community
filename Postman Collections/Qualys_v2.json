@@ -963,7 +963,7 @@
     },
     {
       "_postman_id": "6b27d477-8ce1-e724-846f-e8c23eb6810b",
-      "name": "Oracle Auth record",
+      "name": "Auth record, Oracle",
       "request": {
         "auth": {
           "type": "basic",
