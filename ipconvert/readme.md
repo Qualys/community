@@ -14,3 +14,6 @@ Output
 10.127.2.4/32
 10.127.3.0/29
 10.127.5.0/27
+
+
+Credit: This script was provided by Qualys Community member AV via https://community.qualys.com/docs/DOC-6133-convert-qualys-network-range-to-cidr
