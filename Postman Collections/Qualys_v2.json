@@ -647,7 +647,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
             "description": ""
           }
         ],
@@ -661,17 +661,17 @@
             },
             {
               "key": "template_id",
-              "value": "1448292",
+              "value": "14135581",
               "type": "text"
             },
             {
               "key": "report_title",
-              "value": "API wants to munch on certs",
+              "value": "Auth report",
               "type": "text"
             },
             {
               "key": "output_format",
-              "value": "pdf",
+              "value": "csv",
               "type": "text"
             }
           ]
@@ -732,7 +732,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
             "description": ""
           }
         ],
@@ -741,22 +741,40 @@
           "formdata": [
             {
               "key": "action",
-              "value": "launch",
+              "value": "fetch",
               "type": "text"
             },
             {
               "key": "asset_groups",
               "value": "MMW - Training Seattle Data Center",
-              "type": "text"
+              "type": "text",
+              "disabled": true
             },
             {
               "key": "option_title",
               "value": "PB - Map-like",
-              "type": "text"
+              "type": "text",
+              "disabled": true
             },
             {
               "key": "scan_title",
               "value": "Acquisition scan of organization_name",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "scan_ref",
+              "value": "scan/1491604337.39033",
+              "type": "text"
+            },
+            {
+              "key": "mode",
+              "value": "brief",
+              "type": "text"
+            },
+            {
+              "key": "output_format",
+              "value": "csv",
               "type": "text"
             }
           ]
