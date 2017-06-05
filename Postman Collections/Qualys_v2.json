@@ -82,8 +82,7 @@
             {
               "key": "action",
               "value": "list",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "details",
@@ -140,7 +139,8 @@
             {
               "key": "ips",
               "value": "10.10.10.220,10.10.24.78",
-              "type": "text"
+              "type": "text",
+              "disabled": true
             },
             {
               "key": "action",
@@ -149,12 +149,29 @@
             },
             {
               "key": "status",
-              "value": "Fixed",
+              "value": "Fixed,Active,New,Re-Opened",
               "type": "text"
             },
             {
               "key": "vm_scan_since",
-              "value": "2013-12-01",
+              "value": "",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "detection_updated_since",
+              "value": "2017-03-30",
+              "type": "text"
+            },
+            {
+              "key": "show_igs",
+              "value": "1",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "show_results",
+              "value": "0",
               "type": "text"
             }
           ]
@@ -297,8 +314,7 @@
             {
               "key": "details",
               "value": "All",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             }
           ]
         },
@@ -346,14 +362,12 @@
               "key": "last_modified_by_service_after",
               "value": "2015-01-01",
               "type": "text",
-              "enabled": true,
               "warning": ""
             },
             {
               "key": "details",
               "value": "All",
               "type": "text",
-              "enabled": true,
               "warning": ""
             }
           ]
@@ -780,13 +794,13 @@
               "key": "state",
               "value": "Finished",
               "type": "text",
-              "enabled": false
+              "disabled": true
             },
             {
               "key": "scan_ref",
               "value": "scan/1391836210.38701",
               "type": "text",
-              "enabled": false
+              "disabled": true
             },
             {
               "key": "show_op",
@@ -901,8 +915,7 @@
             {
               "key": "action",
               "value": "list",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             }
           ]
         },
@@ -940,20 +953,17 @@
               "disabled": false,
               "key": "action",
               "value": "list",
-              "enabled": true,
               "type": "text"
             },
             {
               "key": "show_key_info",
               "value": "1",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "show_vuln_info",
               "value": "1",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             }
           ]
         },
@@ -999,50 +1009,42 @@
             {
               "key": "action",
               "value": "create",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "title",
               "value": "ORACLE_AUTH_TEST",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "username",
               "value": "XXXX",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "password",
               "value": "XXXX",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "sid",
               "value": "actdalbd",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "servicename",
               "value": "ora_qualys_db",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "port",
               "value": "1521",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             },
             {
               "key": "action",
               "value": "create",
-              "type": "text",
-              "enabled": true
+              "type": "text"
             }
           ]
         },
