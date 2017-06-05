@@ -315,6 +315,11 @@
               "key": "details",
               "value": "All",
               "type": "text"
+            },
+            {
+              "key": "last_modified_after",
+              "value": "2016-01-01",
+              "type": "text"
             }
           ]
         },
