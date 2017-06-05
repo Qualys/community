@@ -602,11 +602,6 @@
             "key": "X-Requested-With",
             "value": "POSTMAN",
             "description": ""
-          },
-          {
-            "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
-            "description": ""
           }
         ],
         "body": {
@@ -652,7 +647,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
             "description": ""
           }
         ],
@@ -666,17 +661,17 @@
             },
             {
               "key": "template_id",
-              "value": "14135581",
+              "value": "1448292",
               "type": "text"
             },
             {
               "key": "report_title",
-              "value": "Auth report",
+              "value": "API wants to munch on certs",
               "type": "text"
             },
             {
               "key": "output_format",
-              "value": "csv",
+              "value": "pdf",
               "type": "text"
             }
           ]
