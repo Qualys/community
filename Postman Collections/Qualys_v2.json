@@ -694,7 +694,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Basic cXVheXNfcGIyNzpwYXNzd29yZDE=",
+            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
             "description": ""
           }
         ],
@@ -704,7 +704,8 @@
             {
               "key": "id",
               "value": "6662512",
-              "type": "text"
+              "type": "text",
+              "disabled": true
             },
             {
               "key": "action",
