@@ -602,6 +602,11 @@
             "key": "X-Requested-With",
             "value": "POSTMAN",
             "description": ""
+          },
+          {
+            "key": "Authorization",
+            "value": "Basic cXVheXNfZWwyNjprMWxsVHJ1bXA=",
+            "description": ""
           }
         ],
         "body": {
