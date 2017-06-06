@@ -333,11 +333,7 @@
       "request": {
         "auth": {
           "type": "basic",
-          "basic": {
-            "username": "quays_el26",
-            "password": "k1llTrump",
-            "saveHelperData": true,
-            "showPassword": false
+         
           }
         },
         "url": "https://{{base_url}}/api/2.0/fo/knowledge_base/vuln/",
