@@ -322,7 +322,6 @@
           "basic": {
             "username": "quays_el26",
             "password": "k1llTrump",
-            "saveHelperData": true,
             "showPassword": false
           }
         },
@@ -352,7 +351,7 @@
             },
             {
               "key": "last_modified_after",
-              "value": "2016-01-01",
+              "value": "2017-01-01",
               "type": "text"
             }
           ]
