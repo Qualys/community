@@ -112,8 +112,8 @@
         "auth": {
           "type": "basic",
           "basic": {
-            "username": "quays_el26",
-            "password": "k1llTrump",
+            "password": "{{password}}",
+            "username": "{{username}}",
             "showPassword": false
           }
         },
