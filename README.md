@@ -113,7 +113,7 @@ This script, like vulnsummary, demonstrates how to connect to the QualysGuard AP
 
 Qualys provides a Ticket Notification Engine (TNE) that outputs SMTP messages based on XML versions of individual tickets in QualysGuard that are consumable by Remedy ticketing systems. The TNE can also be configured to support some customization to support the receiving ticketing system.
 
-##[usercreate](usercreate)
+## [usercreate](usercreate)
 
 This script adds user accounts to an existing subscription by importing user account information from a user-defined CSV file.
 
