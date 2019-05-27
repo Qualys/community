@@ -14,7 +14,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 dir("checkout_dir") {
-                    sh "whoami"
                     sh "docker build -t prabhasgupte/webmon:latest  . > docker_output"
                 }
             }
