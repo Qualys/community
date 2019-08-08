@@ -4,6 +4,7 @@ Run this script with -h option to know other options.
 '''
 import os
 import Queue
+import time
 import base64
 import urllib
 import urllib2
@@ -59,30 +60,49 @@ def call_api(api_route, params):
     This method does the actual API call. Returns response or raises error.
     Does not support proxy at this moment.
     '''
-    print "[%s] Calling %s with %s" % (
-        current_thread().getName(), api_route, params)
+    while(True):
+        try:
+            print "[%s] Calling %s with %s" % (
+            current_thread().getName(), api_route, params)
 
-    req = build_request(api_route, params)
+            req = build_request(api_route, params)
+            response = urllib2.urlopen(req, timeout=100)
 
-    try:
-        response = urllib2.urlopen(req, timeout=100)
+            rate_limit = response.info().getheader('x-ratelimit-limit')
+            rate_limit_remaining = response.info().getheader('x-ratelimit-remaining')
+            to_wait_sec = response.info().getheader('x-ratelimit-towait-sec')
+            if(rate_limit_remaining and int(rate_limit_remaining) <= 0 and to_wait_sec and int(to_wait_sec) > 0):
+                print "API Rate Limit("+ rate_limit +") reached, will try request again after " + to_wait_sec + " seconds."
+                time.sleep(int(to_wait_sec))
+                break
 
-        if response.getcode() != 200:
-            print "[%s] Got unexpected response from API: %s" % (
-                current_thread().getName(), response.read)
-            raise Exception("API request failed: %s" % response.read)
-        # end of if
+            if response.getcode() != 200:
+                print "[%s] Got unexpected response from API: %s" % (
+                    current_thread().getName(), response.read)
+                raise Exception("API request failed: %s" % response.read)
+            # end of if
 
-        print "[%s] Got response from API..." % current_thread().getName()
-        return response.read()
-    except urllib2.URLError, url_error:
-        print "[%s] Error during request to %s: [%s] %s" % (
+            print "[%s] Got response from API..." % current_thread().getName()
+            return response.read()
+        except urllib2.URLError, url_error:
+            if hasattr(url_error, 'headers'):
+                rate_limit = url_error.headers.get('X-RateLimit-Limit', None)
+                rate_limit_remaining = url_error.headers.get('X-RateLimit-Remaining', None)
+                to_wait_sec = url_error.headers.get('X-RateLimit-Towait-Sec', None)
+                
+                if rate_limit_remaining and int(rate_limit_remaining) <= 0 and to_wait_sec and int(to_wait_sec) > 0:
+                    print "API Rate Limit("+ rate_limit +") reached, will try request again after " + to_wait_sec + " seconds."
+                    time.sleep(int(to_wait_sec))
+                    continue
+
+            print "[%s] Error during request to %s: [%s] %s" % (
             current_thread().getName(), api_route,
             url_error.errno, url_error.reason)
-        raise Exception(
-            "Error during request to %s: [%s] %s" % (
-                api_route, url_error.errno, url_error.reason)
-        )
+            print urllib2.URLError, url_error
+            raise Exception(
+                "Error during request to %s: [%s] %s" % (
+                    api_route, url_error.errno, url_error.reason)
+            )
 # end of call_api
 
 def write_response(response, filename):
