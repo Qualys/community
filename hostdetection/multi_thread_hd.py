@@ -72,9 +72,9 @@ def call_api(api_route, params):
             rate_limit_remaining = response.info().getheader('x-ratelimit-remaining')
             to_wait_sec = response.info().getheader('x-ratelimit-towait-sec')
             if(rate_limit_remaining and int(rate_limit_remaining) <= 0 and to_wait_sec and int(to_wait_sec) > 0):
-                print "API Rate Limit("+ rate_limit +") reached, will try request again after " + to_wait_sec + " seconds."
+                print "[%s] API Rate Limit(%s) reached, will try request again after %s seconds." % (current_thread().getName(), rate_limit, to_wait_sec)
                 time.sleep(int(to_wait_sec))
-                break
+                continue
 
             if response.getcode() != 200:
                 print "[%s] Got unexpected response from API: %s" % (
@@ -91,7 +91,7 @@ def call_api(api_route, params):
                 to_wait_sec = url_error.headers.get('X-RateLimit-Towait-Sec', None)
                 
                 if rate_limit_remaining and int(rate_limit_remaining) <= 0 and to_wait_sec and int(to_wait_sec) > 0:
-                    print "API Rate Limit("+ rate_limit +") reached, will try request again after " + to_wait_sec + " seconds."
+                    print "[%s] API Rate Limit(%s) reached, will try request again after %s seconds." % (current_thread().getName(), rate_limit, to_wait_sec)
                     time.sleep(int(to_wait_sec))
                     continue
 
