@@ -3,7 +3,9 @@ This script downloads Qualys assets and host detections.
 Run this script with -h option to know other options.
 '''
 import os
+import re
 import Queue
+import time
 import base64
 import urllib
 import urllib2
@@ -24,6 +26,7 @@ API_PASSWORD = 'YOUR QUALYS API PASSWORD'
 NUM_ASSET_THREADS = 10
 NUM_DETECTION_THREADS = 10
 CHUNK_SIZE = 1000
+PROXY = None
 
 SETTINGS = {
     'download_assets': True,
@@ -59,30 +62,59 @@ def call_api(api_route, params):
     This method does the actual API call. Returns response or raises error.
     Does not support proxy at this moment.
     '''
-    print "[%s] Calling %s with %s" % (
-        current_thread().getName(), api_route, params)
+    while(True):
+        try:
+            print "[%s] Calling %s with %s" % (
+            current_thread().getName(), api_route, params)
 
-    req = build_request(api_route, params)
+            req = build_request(api_route, params)
+            response = urllib2.urlopen(req, timeout=100)
 
-    try:
-        response = urllib2.urlopen(req, timeout=100)
+            rate_limit = response.info().getheader('x-ratelimit-limit')
+            rate_limit_remaining = response.info().getheader('x-ratelimit-remaining')
+            to_wait_sec = response.info().getheader('x-ratelimit-towait-sec')
+            concurrency_limit = response.info().getheader('x-concurrency-limit-limit')
+            if(rate_limit_remaining and int(rate_limit_remaining) <= 0 and to_wait_sec and int(to_wait_sec) > 0):
+                print "[%s] API Rate Limit(%s) reached, will try request again after %s seconds." % (current_thread().getName(), rate_limit, to_wait_sec)
+                time.sleep(int(to_wait_sec))
+                continue
 
-        if response.getcode() != 200:
-            print "[%s] Got unexpected response from API: %s" % (
-                current_thread().getName(), response.read)
-            raise Exception("API request failed: %s" % response.read)
-        # end of if
+            if response.getcode() != 200:
+                print "[%s] Got unexpected response from API: %s" % (
+                    current_thread().getName(), response.read)
+                raise Exception("API request failed: %s" % response.read)
+            # end of if
 
-        print "[%s] Got response from API..." % current_thread().getName()
-        return response.read()
-    except urllib2.URLError, url_error:
-        print "[%s] Error during request to %s: [%s] %s" % (
+            print "[%s] Got response from API..." % current_thread().getName()
+            return {"response": response.read(), "concurrency_limit": concurrency_limit}
+        except urllib2.URLError, url_error:
+            if hasattr(url_error, 'headers'):
+                rate_limit = url_error.headers.get('X-RateLimit-Limit', None)
+                rate_limit_remaining = url_error.headers.get('X-RateLimit-Remaining', None)
+                to_wait_sec = url_error.headers.get('X-RateLimit-Towait-Sec', None)
+                
+                if rate_limit_remaining and int(rate_limit_remaining) <= 0 and to_wait_sec and int(to_wait_sec) > 0:
+                    print "[%s] API Rate Limit(%s) reached, will try request again after %s seconds." % (current_thread().getName(), rate_limit, to_wait_sec)
+                    time.sleep(int(to_wait_sec))
+                    continue
+                
+                #check for concurrency error
+                concurrency_limit = url_error.headers.get('X-Concurrency-Limit-Limit', None)
+                concurrency_limit_running = url_error.headers.get('X-Concurrency-Limit-Running', None)
+                if concurrency_limit is not None and concurrency_limit_running is not None:
+                    if int(concurrency_limit_running) >= int(concurrency_limit):
+                        print "[%s] API Concurrency Limit(%s) reached, will try request again after 30 seconds." % (current_thread().getName(), concurrency_limit)
+                        time.sleep(30)
+                        continue
+
+            print "[%s] Error during request to %s: [%s] %s" % (
             current_thread().getName(), api_route,
             url_error.errno, url_error.reason)
-        raise Exception(
-            "Error during request to %s: [%s] %s" % (
-                api_route, url_error.errno, url_error.reason)
-        )
+            print urllib2.URLError, url_error
+            raise Exception(
+                "Error during request to %s: [%s] %s" % (
+                    api_route, url_error.errno, url_error.reason)
+            )
 # end of call_api
 
 def write_response(response, filename):
@@ -114,7 +146,8 @@ def get_asset_ids():
     params = {'action': action, 'details': details, 'truncation_limit': 0}
     asset_ids = []
     print "[%s] Fetching asset ids..." % current_thread().getName()
-    response = call_api(SERVER_ROOT + api_route, params)
+    api_response = call_api(SERVER_ROOT + api_route, params)
+    response = api_response['response']
     filename = OUTPUT_DIR + "/assets/asset_ids_%s_%s.xml" % (
         os.getpid(), current_thread().getName())
     write_response(response, filename)
@@ -198,7 +231,8 @@ def download_host_detections(ids):
         params['truncation_limit'] = 0
 
     while keep_running:
-        response = call_api(SERVER_ROOT + api_route, params)
+        api_response = call_api(SERVER_ROOT + api_route, params)
+        response = api_response['response']
 
         filename = OUTPUT_DIR + "/vm_detections/\
         vm_detections_Range-%s_Process-%s_%s_Batch-%d.%s" % (
@@ -276,7 +310,8 @@ def download_assets(ids):
     keep_running = True
 
     while keep_running:
-        response = call_api(SERVER_ROOT + api_route, params)
+        api_response = call_api(SERVER_ROOT + api_route, params)
+        response = api_response['response']
 
         filename = OUTPUT_DIR + "/assets/\
         assets_Range-%s_Proc-%s_%s_Batch-%d.xml" % (
@@ -319,12 +354,34 @@ def chunk_id_set(id_set, num_threads):
     # end of for loop
 # end of chunk_id_set
 
+def is_valid_proxy(url):
+    if url == '':
+        return True
+    regex = re.compile(
+        r'^(?:(\w+)(?::)+((\w+))@)?'
+        r'^(https:\/\/)?'  # https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain...
+        r'localhost|'  # localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+        r'(?::'  # Match the :
+        r'(?![7-9]\d\d\d\d)'  # Ignrore anything above 7....
+        r'(?!6[6-9]\d\d\d)'  # Ignore anything abovr 69...
+        r'(?!65[6-9]\d\d)'  # etc...
+        r'(?!655[4-9]\d)'
+        r'(?!6553[6-9])'
+        r'(?!0+)'  # ignore complete 0(s)
+        r'(?P<Port>\d{1,5})'
+        r')?'  # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    perfect = regex.search(url)
+    return perfect
+
 def parse_options():
     '''
     This method parses all options given in command line.
     '''
     global SERVER_ROOT, API_USERNAME, API_PASSWORD
-    global NUM_ASSET_THREADS, NUM_DETECTION_THREADS, CHUNK_SIZE
+    global NUM_ASSET_THREADS, NUM_DETECTION_THREADS, CHUNK_SIZE, PROXY
     parser = OptionParser()
     parser.add_option("-s", "--server", dest="server",\
     default="https://qualysapi.qualys.com", help="Qualys API Server")
@@ -340,6 +397,8 @@ def parse_options():
     help="Number of threads to fetch host detections")
     parser.add_option("-c", "--CHUNK_SIZE", dest="CHUNK_SIZE", default=1000,\
     help="Size of ID range chunks")
+    parser.add_option("-x", "--proxy", default=None,\
+    dest="proxy", help="Proxy server details e.g. 10.114.27.54:3128 OR username:password@10.10.10.2:8080")
     (options, values) = parser.parse_args()
     SERVER_ROOT = options.server
     API_USERNAME = options.username
@@ -347,12 +406,21 @@ def parse_options():
     NUM_ASSET_THREADS = int(options.num_asset_threads)
     NUM_DETECTION_THREADS = int(options.num_detection_threads)
     CHUNK_SIZE = int(options.CHUNK_SIZE)
+    PROXY = options.proxy
 # end of parse_options
+
+def get_concurrency_limit():
+    print "Checking API concurrency limit..."
+    api_route = "/msp/about.php"
+    api_response = call_api(SERVER_ROOT + api_route, {})
+    concurrency_limit = api_response['concurrency_limit']
+    return concurrency_limit
 
 def main():
     '''
     Main method of this code.
     '''
+    global NUM_ASSET_THREADS, NUM_DETECTION_THREADS
     parse_options()
 
     if NUM_ASSET_THREADS <= 0:
@@ -368,7 +436,26 @@ def main():
         print SETTINGS
         exit()
     # end of if
-
+    
+    if PROXY:
+        if is_valid_proxy(PROXY):
+            proxy = urllib2.ProxyHandler({"https": PROXY})
+            opener = urllib2.build_opener(proxy)            
+            urllib2.install_opener(opener)
+        else:
+            print "Invalid proxy! please enter valid proxy details e.g. 10.114.27.54:3128 OR username:password@https://10.10.10.2:8080"
+    
+    try:
+        concurrency_limit = get_concurrency_limit()
+        if concurrency_limit and NUM_ASSET_THREADS > int(concurrency_limit):
+            NUM_ASSET_THREADS = int(concurrency_limit)
+            print "Number of threads for assets is more than the API concurrency limit, will use %s threads instead." %concurrency_limit
+        if concurrency_limit and NUM_DETECTION_THREADS > int(concurrency_limit):
+            NUM_DETECTION_THREADS = int(concurrency_limit)
+            print "Number of threads for detections is more than the API concurrency limit, will use %s threads instead." %concurrency_limit
+    except Exception, e:
+        print "Failed to get response for API, please provide valid details! Error: %s" % e
+        exit()
     id_set = get_asset_ids()
     num_ids = len(id_set)
     print "[%s] Got %d asset ids..." % (current_thread().getName(), num_ids)
@@ -418,6 +505,7 @@ def main():
 
     for worker in workers:
         worker.join()
+
 # end of main
 
 if __name__ == "__main__":
