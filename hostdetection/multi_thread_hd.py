@@ -398,7 +398,7 @@ def parse_options():
     parser.add_option("-c", "--CHUNK_SIZE", dest="CHUNK_SIZE", default=1000,\
     help="Size of ID range chunks")
     parser.add_option("-x", "--proxy", default=None,\
-    dest="proxy", help="Proxy details e.g. 10.114.27.54:3128 OR username:password@10.10.10.2:8080")
+    dest="proxy", help="Proxy server details e.g. 10.114.27.54:3128 OR username:password@10.10.10.2:8080")
     (options, values) = parser.parse_args()
     SERVER_ROOT = options.server
     API_USERNAME = options.username
@@ -408,6 +408,13 @@ def parse_options():
     CHUNK_SIZE = int(options.CHUNK_SIZE)
     PROXY = options.proxy
 # end of parse_options
+
+def get_concurrency_limit():
+    print "Checking API concurrency limit..."
+    api_route = "/msp/about.php"
+    api_response = call_api(SERVER_ROOT + api_route, {})
+    concurrency_limit = api_response['concurrency_limit']
+    return concurrency_limit
 
 def main():
     '''
@@ -439,9 +446,7 @@ def main():
             print "Invalid proxy! please enter valid proxy details e.g. 10.114.27.54:3128 OR username:password@https://10.10.10.2:8080"
     
     try:
-        api_route = "/msp/about.php"
-        api_response = call_api(SERVER_ROOT + api_route, {})
-        concurrency_limit = api_response['concurrency_limit']
+        concurrency_limit = get_concurrency_limit()
         if concurrency_limit and NUM_ASSET_THREADS > int(concurrency_limit):
             NUM_ASSET_THREADS = int(concurrency_limit)
             print "Number of threads for assets is more than the API concurrency limit, will use %s threads instead." %concurrency_limit
