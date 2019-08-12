@@ -3,6 +3,7 @@ This script downloads Qualys assets and host detections.
 Run this script with -h option to know other options.
 '''
 import os
+import re
 import Queue
 import time
 import base64
@@ -25,6 +26,7 @@ API_PASSWORD = 'YOUR QUALYS API PASSWORD'
 NUM_ASSET_THREADS = 10
 NUM_DETECTION_THREADS = 10
 CHUNK_SIZE = 1000
+PROXY = None
 
 SETTINGS = {
     'download_assets': True,
@@ -54,6 +56,26 @@ def build_request(api_route, params):
     data = urllib.urlencode(params)
     return urllib2.Request(api_route, data=data, headers=build_headers())
 # end of build_request
+
+def get_concurrency_limit(api_route):
+    '''
+    validate credentials and return API concurrency limit for the subscription
+    '''
+    try:
+        print "Calling %s " % api_route
+        req = build_request(api_route, {})
+        response = urllib2.urlopen(req, timeout=100)
+
+        concurrency_limit = response.info().getheader('x-concurrency-limit-limit')
+        if response.getcode() != 200:
+            raise Exception("API request failed (Status code: %s): %s" % (response.getcode(), response.read))
+        
+        print "Got response from API..."
+        return concurrency_limit
+    except Exception, e:
+        import traceback
+        traceback.print_exc()
+        raise Exception("Error during request to %s: %s" % (api_route, e))
 
 def call_api(api_route, params):
     '''
@@ -339,12 +361,34 @@ def chunk_id_set(id_set, num_threads):
     # end of for loop
 # end of chunk_id_set
 
+def is_valid_proxy(url):
+    if url == '':
+        return True
+    regex = re.compile(
+        r'^(?:(\w+)(?::)+((\w+))@)?'
+        r'^(https:\/\/)?'  # https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain...
+        r'localhost|'  # localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+        r'(?::'  # Match the :
+        r'(?![7-9]\d\d\d\d)'  # Ignrore anything above 7....
+        r'(?!6[6-9]\d\d\d)'  # Ignore anything abovr 69...
+        r'(?!65[6-9]\d\d)'  # etc...
+        r'(?!655[4-9]\d)'
+        r'(?!6553[6-9])'
+        r'(?!0+)'  # ignore complete 0(s)
+        r'(?P<Port>\d{1,5})'
+        r')?'  # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    perfect = regex.search(url)
+    return perfect
+
 def parse_options():
     '''
     This method parses all options given in command line.
     '''
     global SERVER_ROOT, API_USERNAME, API_PASSWORD
-    global NUM_ASSET_THREADS, NUM_DETECTION_THREADS, CHUNK_SIZE
+    global NUM_ASSET_THREADS, NUM_DETECTION_THREADS, CHUNK_SIZE, PROXY
     parser = OptionParser()
     parser.add_option("-s", "--server", dest="server",\
     default="https://qualysapi.qualys.com", help="Qualys API Server")
@@ -360,6 +404,8 @@ def parse_options():
     help="Number of threads to fetch host detections")
     parser.add_option("-c", "--CHUNK_SIZE", dest="CHUNK_SIZE", default=1000,\
     help="Size of ID range chunks")
+    parser.add_option("-x", "--proxy", default=None,\
+    dest="proxy", help="Proxy details e.g. 10.114.27.54:3128 OR username:password@10.10.10.2:8080")
     (options, values) = parser.parse_args()
     SERVER_ROOT = options.server
     API_USERNAME = options.username
@@ -367,12 +413,14 @@ def parse_options():
     NUM_ASSET_THREADS = int(options.num_asset_threads)
     NUM_DETECTION_THREADS = int(options.num_detection_threads)
     CHUNK_SIZE = int(options.CHUNK_SIZE)
+    PROXY = options.proxy
 # end of parse_options
 
 def main():
     '''
     Main method of this code.
     '''
+    global NUM_ASSET_THREADS, NUM_DETECTION_THREADS
     parse_options()
 
     if NUM_ASSET_THREADS <= 0:
@@ -388,7 +436,27 @@ def main():
         print SETTINGS
         exit()
     # end of if
-
+    
+    if PROXY:
+        if is_valid_proxy(PROXY):
+            proxy = urllib2.ProxyHandler({"https": PROXY})
+            opener = urllib2.build_opener(proxy)            
+            urllib2.install_opener(opener)
+        else:
+            print "Invalid proxy! please enter valid proxy details e.g. 10.114.27.54:3128 OR username:password@https://10.10.10.2:8080"
+    
+    try:
+        api_route = "/msp/about.php"
+        concurrency_limit = get_concurrency_limit(SERVER_ROOT + api_route)
+        if NUM_ASSET_THREADS > int(concurrency_limit):
+            NUM_ASSET_THREADS = int(concurrency_limit)
+            print "Number of threads for assets is more than the API concurrency limit, will use %s threads instead." %concurrency_limit
+        if NUM_DETECTION_THREADS > int(concurrency_limit):
+            NUM_DETECTION_THREADS = int(concurrency_limit)
+            print "Number of threads for detections is more than the API concurrency limit, will use %s threads instead." %concurrency_limit
+    except Exception, e:
+        print "Failed to get response for API, please provide valid details! Error: %s" % e
+        exit()
     id_set = get_asset_ids()
     num_ids = len(id_set)
     print "[%s] Got %d asset ids..." % (current_thread().getName(), num_ids)
@@ -438,6 +506,7 @@ def main():
 
     for worker in workers:
         worker.join()
+
 # end of main
 
 if __name__ == "__main__":
