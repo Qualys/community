@@ -57,26 +57,6 @@ def build_request(api_route, params):
     return urllib2.Request(api_route, data=data, headers=build_headers())
 # end of build_request
 
-def get_concurrency_limit(api_route):
-    '''
-    validate credentials and return API concurrency limit for the subscription
-    '''
-    try:
-        print "Calling %s " % api_route
-        req = build_request(api_route, {})
-        response = urllib2.urlopen(req, timeout=100)
-
-        concurrency_limit = response.info().getheader('x-concurrency-limit-limit')
-        if response.getcode() != 200:
-            raise Exception("API request failed (Status code: %s): %s" % (response.getcode(), response.read))
-        
-        print "Got response from API..."
-        return concurrency_limit
-    except Exception, e:
-        import traceback
-        traceback.print_exc()
-        raise Exception("Error during request to %s: %s" % (api_route, e))
-
 def call_api(api_route, params):
     '''
     This method does the actual API call. Returns response or raises error.
@@ -93,6 +73,7 @@ def call_api(api_route, params):
             rate_limit = response.info().getheader('x-ratelimit-limit')
             rate_limit_remaining = response.info().getheader('x-ratelimit-remaining')
             to_wait_sec = response.info().getheader('x-ratelimit-towait-sec')
+            concurrency_limit = response.info().getheader('x-concurrency-limit-limit')
             if(rate_limit_remaining and int(rate_limit_remaining) <= 0 and to_wait_sec and int(to_wait_sec) > 0):
                 print "[%s] API Rate Limit(%s) reached, will try request again after %s seconds." % (current_thread().getName(), rate_limit, to_wait_sec)
                 time.sleep(int(to_wait_sec))
@@ -105,7 +86,7 @@ def call_api(api_route, params):
             # end of if
 
             print "[%s] Got response from API..." % current_thread().getName()
-            return response.read()
+            return {"response": response.read(), "concurrency_limit": concurrency_limit}
         except urllib2.URLError, url_error:
             if hasattr(url_error, 'headers'):
                 rate_limit = url_error.headers.get('X-RateLimit-Limit', None)
@@ -165,7 +146,8 @@ def get_asset_ids():
     params = {'action': action, 'details': details, 'truncation_limit': 0}
     asset_ids = []
     print "[%s] Fetching asset ids..." % current_thread().getName()
-    response = call_api(SERVER_ROOT + api_route, params)
+    api_response = call_api(SERVER_ROOT + api_route, params)
+    response = api_response['response']
     filename = OUTPUT_DIR + "/assets/asset_ids_%s_%s.xml" % (
         os.getpid(), current_thread().getName())
     write_response(response, filename)
@@ -249,7 +231,8 @@ def download_host_detections(ids):
         params['truncation_limit'] = 0
 
     while keep_running:
-        response = call_api(SERVER_ROOT + api_route, params)
+        api_response = call_api(SERVER_ROOT + api_route, params)
+        response = api_response['response']
 
         filename = OUTPUT_DIR + "/vm_detections/\
         vm_detections_Range-%s_Process-%s_%s_Batch-%d.%s" % (
@@ -327,7 +310,8 @@ def download_assets(ids):
     keep_running = True
 
     while keep_running:
-        response = call_api(SERVER_ROOT + api_route, params)
+        api_response = call_api(SERVER_ROOT + api_route, params)
+        response = api_response['response']
 
         filename = OUTPUT_DIR + "/assets/\
         assets_Range-%s_Proc-%s_%s_Batch-%d.xml" % (
@@ -456,11 +440,12 @@ def main():
     
     try:
         api_route = "/msp/about.php"
-        concurrency_limit = get_concurrency_limit(SERVER_ROOT + api_route)
-        if NUM_ASSET_THREADS > int(concurrency_limit):
+        api_response = call_api(SERVER_ROOT + api_route, {})
+        concurrency_limit = api_response['concurrency_limit']
+        if concurrency_limit and NUM_ASSET_THREADS > int(concurrency_limit):
             NUM_ASSET_THREADS = int(concurrency_limit)
             print "Number of threads for assets is more than the API concurrency limit, will use %s threads instead." %concurrency_limit
-        if NUM_DETECTION_THREADS > int(concurrency_limit):
+        if concurrency_limit and NUM_DETECTION_THREADS > int(concurrency_limit):
             NUM_DETECTION_THREADS = int(concurrency_limit)
             print "Number of threads for detections is more than the API concurrency limit, will use %s threads instead." %concurrency_limit
     except Exception, e:
