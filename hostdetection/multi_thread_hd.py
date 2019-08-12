@@ -116,6 +116,15 @@ def call_api(api_route, params):
                     print "[%s] API Rate Limit(%s) reached, will try request again after %s seconds." % (current_thread().getName(), rate_limit, to_wait_sec)
                     time.sleep(int(to_wait_sec))
                     continue
+                
+                #check for concurrency error
+                concurrency_limit = url_error.headers.get('X-Concurrency-Limit-Limit', None)
+                concurrency_limit_running = url_error.headers.get('X-Concurrency-Limit-Running', None)
+                if concurrency_limit is not None and concurrency_limit_running is not None:
+                    if int(concurrency_limit_running) >= int(concurrency_limit):
+                        print "[%s] API Concurrency Limit(%s) reached, will try request again after 30 seconds." % (current_thread().getName(), concurrency_limit)
+                        time.sleep(30)
+                        continue
 
             print "[%s] Error during request to %s: [%s] %s" % (
             current_thread().getName(), api_route,
