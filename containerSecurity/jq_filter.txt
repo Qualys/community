@@ -1,0 +1,12 @@
+#
+# LICENSE
+# =======
+#
+# THIS SCRIPT IS PROVIDED TO YOU "AS IS." TO THE EXTENT PERMITTED BY LAW,
+# QUALYS HEREBY DISCLAIMS ALL WARRANTIES AND LIABILITY FOR THE PROVISION OR
+# USE OF THIS SCRIPT. IN NO EVENT SHALL THESE SCRIPTS BE DEEMED TO BE SUPPORTED
+# PRODUCTS/SERVICES AS PROVIDED BY QUALYS.
+#
+
+# [.vulnerabilities[] | select(.severity>=3) | {qid, title: .title}] | length as $vuln_count | if $vuln_count > 0 then error("\($vuln_count) vulnerabilities with severity >= 3 found!") else "No vulnerabilities found with severity >=3" end
+[.vulnerabilities[] | select(.severity>=5) | {qid, title: .title}] | length as $vuln_count | if $vuln_count > 0 then error("\($vuln_count) vulnerabilities with severity 5 found!") else "No vulnerabilities found with severity 5" end
