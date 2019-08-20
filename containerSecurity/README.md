@@ -4,7 +4,7 @@ This directory will contain sample scripts, that can be referred to/used in CI/C
 
 ## List of scripts
 1. [Jenkins: A typical pipeline job using Qualys plugin's global configuration](https://github.com/Qualys/community/blob/master/containerSecurity/sample_Jenkinsfile.groovy)
-2. [CI/CD: Validate docker image without plugin](https://github.com/Qualys/community/blob/master/containerSecurity/validate_image.sh)
+2. [CI/CD: Validate docker image without plugin](#validate-docker-image-without-plugin)
 
 ## Validate docker image without plugin
 
