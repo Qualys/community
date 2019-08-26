@@ -1,5 +1,7 @@
 # Qualys API Postman Collection
-Welcome to the Postman collection of Qualys API queries! All Qualys APIs have been added within subfolders to this collection. The parameters within those API folders are a subset of the parameters avaliable to get you started. For more advanced use cases and a list of all paramaters with values please reference the relevant API user guides found here: https://www.qualys.com/documentation/
+Welcome to the Postman collection of Qualys API queries! All Qualys APIs have been added within subfolders to this collection. The parameters within those API folders are a subset of the parameters available to get you started. For more advanced use cases and a list of all paramaters with values please reference the relevant API user guides found here: https://www.qualys.com/documentation/
+
+For a tutorial on how to setup and configure Postman for this collection, please follow our tutorial found [here](https://discussions.qualys.com/docs/DOC-4523-qualys-api-client-examples#jive_content_id_Postman_Mac_Windows_or_Linux)
 
 Author: Laura Seletos
 
