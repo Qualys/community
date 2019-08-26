@@ -9,12 +9,18 @@ These scripts are unsupported and are provided as proof-of-concept only.Scripts 
 
 Note, that if you account is setup on a different platform you may need to edit the script and change the FQDN via hard coded variables or via a run time parameter (e.g. `--serverurl=`) from `qualsapi.qualys.com` to one of the following:
 
-Platform                  | URI
-------------------------- | -------------------------------------
-QualysGuard US Platform 1 | https://qualysapi.qualys.com
-QualysGuard US Platform 2 | https://qualysapi.qg2.apps.qualys.com
-QualysGuard EU Platform   | https://qualysapi.qualys.eu
-QualysGuard @Customer     | https://qualysapi.<customer_base_url>
+Platform Name | URL 
+------------ | ----
+Qualys US Platform 1 | https://qualysguard.qualys.com
+Qualys US Platform 1 - API Gateway (FIM, IOC, ITAM) | https://gateway.qg1.apps.qualys.com
+Qualys US Platform 2 | https://qualysguard.qg2.apps.qualys.com
+Qualys US Platform 3 | https://qualysguard.qg3.apps.qualys.com
+Qualys US Platform 4 | https://qualysguard.qg4.apps.qualys.com
+Qualys EU Platform 1 | https://qualysguard.qualys.eu
+Qualys EU Platform 1 - API Gateway (FIM, IOC, ITAM) | https://gateway.qg1.apps.qualys.eu
+Qualys EU Platform 2 | https://qualysapi.qg2.apps.qualys.eu
+Qualys India Platform 1 | https://qualysguard.qg1.apps.qualys.in
+Qualys Private Cloud Platform | https://qualysapi.<customer_base_url>
 
 # Scripts summary
 
