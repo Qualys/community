@@ -9,16 +9,17 @@ Author: Laura Seletos
 ## Getting Started
 
 #### STEP 1: Identify that your reaching out to the correct Qualys API Server
-
-Account Location = API Server URL
-- Qualys US Platform 1 = https://qualysapi.qualys.com
-- Qualys US Platform 2 = https://qualysapi.qg2.apps.qualys.com
-- Qualys US Platform 3 = https://qualysapi.qg3.apps.qualys.com
-- Qualys US Platform 4 = https://qualysapi.qg4.apps.qualys.com
-- Qualys EU Platform 1 = https://qualysapi.qualys.eu
-- Qualys EU Platform 2 = https://qualysapi.qg2.apps.qualys.eu
-- Qualys India Platform 1 = https://qualysapi.qg1.apps.qualys.in
-- Qualys Private Cloud Platform = https://qualysapi.<customer_base_url>
+##### Qualys Platform URLs
+Platform Name | URL 
+------------ | ----
+Qualys US Platform 1 | https://qualysguard.qualys.com
+Qualys US Platform 2 | https://qualysguard.qg2.apps.qualys.com
+Qualys US Platform 3 | https://qualysguard.qg3.apps.qualys.com
+Qualys US Platform 4 | https://qualysguard.qg4.apps.qualys.com
+Qualys EU Platform 1 | https://qualysguard.qualys.eu
+Qualys EU Platform 2 | https://qualysapi.qg2.apps.qualys.eu
+Qualys India Platform 1 | https://qualysguard.qg1.apps.qualys.in
+Qualys Private Cloud Platform | https://qualysapi.<customer_base_url>
 
 #### STEP 2: Understanding [API Limits](https://www.qualys.com/docs/qualys-api-limits.pdf)
 
