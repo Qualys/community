@@ -13,10 +13,12 @@ Author: Laura Seletos
 Platform Name | URL 
 ------------ | ----
 Qualys US Platform 1 | https://qualysguard.qualys.com
+Qualys US Platform 1 - API Gateway (FIM, IOC, ITAM) | https://gateway.qg1.apps.qualys.com
 Qualys US Platform 2 | https://qualysguard.qg2.apps.qualys.com
 Qualys US Platform 3 | https://qualysguard.qg3.apps.qualys.com
 Qualys US Platform 4 | https://qualysguard.qg4.apps.qualys.com
 Qualys EU Platform 1 | https://qualysguard.qualys.eu
+Qualys EU Platform 1 - API Gateway (FIM, IOC, ITAM) | https://gateway.qg1.apps.qualys.eu
 Qualys EU Platform 2 | https://qualysapi.qg2.apps.qualys.eu
 Qualys India Platform 1 | https://qualysguard.qg1.apps.qualys.in
 Qualys Private Cloud Platform | https://qualysapi.<customer_base_url>
