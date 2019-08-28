@@ -39,3 +39,4 @@ Date/time format is YYYY-MM-DD[THH:MM:SSZ] where time is optional.
 - 5/1/2019 - Version 1.0 - Laura Seletos - Create & populated postman collections
 - 7/12/2019 - Version 2.0 - Laura Seletos - Changed collection auth to variables that users can manage within the environment variables. Added new Common Use Case examples.
 - 8/26/2019 - Version 2.0 - Laura Seletos - Adding Postman API Collection to Qualys Github
+- 8/28/2019 - Version 3.0 - Laura Seletos - Updated authentication for api gateway services (IOC, CertView, FIM, ITAM). Added new Qualys Application-Specific APIs and new Common Use Case examples.
