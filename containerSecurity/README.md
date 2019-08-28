@@ -42,7 +42,7 @@ In CI/CD pipeline, execute this script with correct arguments **after** you buil
 
 `./validate_image.sh ${QUALYS_API_SERVER} ${USERNAME} ${PASSWORD} ${DOCKER_IMAGE_ID}`
 
-It is recommended that you set those arguments as build/environment variables. A [sample Jenkinsfile](https://github.com/Qualys/community/blob/master/containerSecurity/Jenkinsfile_validate_image_without_plugin.groovy) is provided as well for your reference.
+***It is recommended that you set those arguments as build/environment variables.*** A [sample Jenkinsfile](https://github.com/Qualys/community/blob/master/containerSecurity/Jenkinsfile_validate_image_without_plugin.groovy) is provided as well for your reference.
 
 ### What does this script do
 
