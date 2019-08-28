@@ -17,6 +17,14 @@ This directory will contain sample scripts, that can be referred to/used in CI/C
 
 This script demonstrates how Qualys Container Security API can be used to validate docker image in CI/CD pipeline. 
 
+Usually, in CI/CD pipeline, your workflow would be as follows:
+
+1. Checkout and build the code
+2. Build a docker image
+3. Push the image to registry
+
+It is recommended to use this script **just before step 3**. This will help you make sure, all the docker images pushed to registry are always free from serious vulnerabilities. 
+
 #### Setting jq filter to validate image
 
 First thing first. Decide a criteria to evaluate your docker image. It could be based on vulnerability severity. Then, prepare a jq filter for your criteria. You might want to refer [jq manual](https://stedolan.github.io/jq/manual/) for that. There is a sample filter provided in [this file](https://github.com/Qualys/community/blob/master/containerSecurity/jq_filter.txt).
@@ -30,7 +38,7 @@ The script requires 4 arguments:
 3. Qualys API Password
 4. Image Id
 
-In CI/CD pipeline, *after* you build your docker image, execute this script with correct arguments.
+In CI/CD pipeline, execute this script with correct arguments **after** you build your docker image, and **before** you push it to registry. Make sure you aren't deleting the image before this script executes.
 
 `./validate_image.sh ${QUALYS_API_SERVER} ${USERNAME} ${PASSWORD} ${DOCKER_IMAGE_ID}`
 
