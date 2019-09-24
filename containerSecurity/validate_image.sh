@@ -12,13 +12,16 @@
 ################################################################################
 
 cat << EOLICENSE
-* LICENSE
-* =======
-*
-* THIS SCRIPT IS PROVIDED TO YOU "AS IS." TO THE EXTENT PERMITTED BY LAW,
-* QUALYS HEREBY DISCLAIMS ALL WARRANTIES AND LIABILITY FOR THE PROVISION OR
-* USE OF THIS SCRIPT. IN NO EVENT SHALL THESE SCRIPTS BE DEEMED TO BE SUPPORTED
-* PRODUCTS/SERVICES AS PROVIDED BY QUALYS.
+################################################################################
+# LICENSE
+# =======
+#
+# THIS SCRIPT IS PROVIDED TO YOU "AS IS." TO THE EXTENT PERMITTED BY LAW,
+# QUALYS HEREBY DISCLAIMS ALL WARRANTIES AND LIABILITY FOR THE PROVISION OR
+# USE OF THIS SCRIPT. IN NO EVENT SHALL THESE SCRIPTS BE DEEMED TO BE SUPPORTED
+# PRODUCTS/SERVICES AS PROVIDED BY QUALYS.
+################################################################################
+
 EOLICENSE
 
 set -e
@@ -72,7 +75,6 @@ check_image_input_type () {
 
 get_image_id_from_name () {
 	docker_command="$DOCKER images $1"
-	echo $docker_command
 	IMAGE_ID=$($docker_command | head -2 | tail -1 | awk '{print $3}')
 
 	if [[ "$IMAGE_ID" == "IMAGE" ]]; then
@@ -85,14 +87,12 @@ get_image_id_from_name () {
 # Main execution starts here
 ###############################################################################
 
-echo "IMAGE Input is ${IMAGE}"
-
 check_image_input_type $IMAGE
 
 if [[ "$IMAGE_INPUT_TYPE" == "NAME" ]]; then
-	echo "Input is image name. Script will now try to get the image id."
+	echo "Input (${IMAGE}) is image name. Script will now try to get the image id."
 	get_image_id_from_name $IMAGE
-	echo "Image id extracted is: $IMAGE_ID"
+	echo "Image id belonging to $IMAGE is: $IMAGE_ID"
 fi
 
 GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.1/images/${IMAGE_ID}"
