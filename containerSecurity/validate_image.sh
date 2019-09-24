@@ -93,6 +93,8 @@ if [[ "$IMAGE_INPUT_TYPE" == "NAME" ]]; then
 	echo "Input (${IMAGE}) is image name. Script will now try to get the image id."
 	get_image_id_from_name $IMAGE
 	echo "Image id belonging to $IMAGE is: $IMAGE_ID"
+else
+	IMAGE_ID=$IMAGE
 fi
 
 GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.1/images/${IMAGE_ID}"
