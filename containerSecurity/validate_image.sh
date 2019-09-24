@@ -29,7 +29,7 @@ set -e
 if [[ $# -lt 4 ]]; then
 	echo "All required arguments not provided."
 	echo "Syntax:"
-	echo "validate_image.sh <Qualys API Server> <Username> <Password> <ImageId>"
+	echo "validate_image.sh <Qualys API Server> <Username> <Password> <Image Id|Name>"
 	exit 1
 fi
 

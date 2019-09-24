@@ -11,7 +11,7 @@ This directory will contain sample scripts, that can be referred to/used in CI/C
 ### Prerequisites
 
 1. [jq](https://stedolan.github.io/jq/)
-2. Qualys Container Security Sensor setup correctly
+2. Qualys Container Security CI/CD Sensor setup correctly
 
 ### How to use this script
 
@@ -36,11 +36,15 @@ The script requires 4 arguments:
 1. Qualys API Server URL
 2. Qualys API Username
 3. Qualys API Password
-4. Image Id
+4. Image Id/Image Name
 
 In CI/CD pipeline, execute this script with correct arguments **after** you build your docker image, and **before** you push it to registry. Make sure you aren't deleting the image before this script executes.
 
 `./validate_image.sh ${QUALYS_API_SERVER} ${USERNAME} ${PASSWORD} ${DOCKER_IMAGE_ID}`
+
+OR
+
+`./validate_image.sh ${QUALYS_API_SERVER} ${USERNAME} ${PASSWORD} ${DOCKER_IMAGE_NAME}`
 
 ***It is recommended that you set those arguments as build/environment variables.*** A [sample Jenkinsfile](https://github.com/Qualys/community/blob/master/containerSecurity/Jenkinsfile_validate_image_without_plugin.groovy) is provided as well for your reference.
 
