@@ -11,7 +11,9 @@ This directory will contain sample scripts, that can be referred to/used in CI/C
 ### Prerequisites
 
 1. [jq](https://stedolan.github.io/jq/)
-2. Qualys Container Security CI/CD Sensor setup correctly
+2. curl
+3. docker
+4. Qualys Container Security CI/CD Sensor setup correctly
 
 ### How to use this script
 

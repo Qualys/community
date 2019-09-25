@@ -33,14 +33,15 @@ if [[ $# -lt 4 ]]; then
 	exit 1
 fi
 
-CURL=$(which curl)
-JQ=$(which jq)
-DOCKER=$(which docker)
 
 QUALYS_API_SERVER=$1
 USERNAME=$2
 PASSWORD=$3
 IMAGE=$4
+
+check_command_exists () {
+	hash $1 2>/dev/null || { echo >&2 "This script requires $1 but it's not installed. Aborting."; exit 1; }
+}
 
 get_result () {
 	echo "Getting result for ${IMAGE_ID}"
@@ -86,6 +87,14 @@ get_image_id_from_name () {
 ###############################################################################
 # Main execution starts here
 ###############################################################################
+
+check_command_exists curl
+check_command_exists jq
+check_command_exists docker
+
+CURL=$(which curl)
+JQ=$(which jq)
+DOCKER=$(which docker)
 
 check_image_input_type $IMAGE
 
