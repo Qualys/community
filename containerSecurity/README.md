@@ -15,6 +15,11 @@ This directory will contain sample scripts, that can be referred to/used in CI/C
 3. docker
 4. Qualys Container Security CI/CD Sensor setup correctly
 
+### Script and Input file
+
+1. [validate_image.sh](https://github.com/Qualys/community/blob/master/containerSecurity/validate_image.sh)
+2. [jq_filter.txt](https://github.com/Qualys/community/blob/master/containerSecurity/jq_filter.txt)
+
 ### How to use this script
 
 This script demonstrates how Qualys Container Security API can be used to validate docker image in CI/CD pipeline. 
