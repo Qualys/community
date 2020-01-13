@@ -72,11 +72,14 @@ check_image_input_type () {
 	else
 		IMAGE_INPUT_TYPE='NAME'
 	fi
+	echo $IMAGE_INPUT_TYPE
 }
 
 get_image_id_from_name () {
 	docker_command="$DOCKER images $1"
+	echo $docker_command
 	IMAGE_ID=$($docker_command | head -2 | tail -1 | awk '{print $3}')
+	echo $IMAGE_ID
 
 	if [[ "$IMAGE_ID" == "IMAGE" ]]; then
 		echo "Error! No image found by name $1"
