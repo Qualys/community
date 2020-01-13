@@ -72,16 +72,16 @@ check_image_input_type () {
 	else
 		IMAGE_INPUT_TYPE='NAME'
 	fi
-	echo $IMAGE_INPUT_TYPE
+	echo ${IMAGE_INPUT_TYPE}
 }
 
 get_image_id_from_name () {
 	docker_command="$DOCKER images $1"
-	echo $docker_command
+	echo ${docker_command}
 	IMAGE_ID=$($docker_command | head -2 | tail -1 | awk '{print $3}')
-	echo $IMAGE_ID
+	echo ${IMAGE_ID}
 
-	if [[ "$IMAGE_ID" == "IMAGE" ]]; then
+	if [[ "${IMAGE_ID}" == "IMAGE" ]]; then
 		echo "Error! No image found by name $1"
 		exit 2
 	fi
@@ -99,14 +99,14 @@ CURL=$(which curl)
 JQ=$(which jq)
 DOCKER=$(which docker)
 
-check_image_input_type $IMAGE
+check_image_input_type ${IMAGE}
 
-if [[ "$IMAGE_INPUT_TYPE" == "NAME" ]]; then
+if [[ "${IMAGE_INPUT_TYPE}" == "NAME" ]]; then
 	echo "Input (${IMAGE}) is image name. Script will now try to get the image id."
-	get_image_id_from_name $IMAGE
-	echo "Image id belonging to $IMAGE is: $IMAGE_ID"
+	get_image_id_from_name ${IMAGE}
+	echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
 else
-	IMAGE_ID=$IMAGE
+	IMAGE_ID=${IMAGE}
 fi
 
 GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.1/images/${IMAGE_ID}"
@@ -117,7 +117,7 @@ echo "Qualys Sensor will untag it after scanning. In case this is the only tag p
 
 get_result
 
-while [ "$HTTP_CODE" -ne "200" -o "$VULNS_AVAILABLE" != true ]
+while [ "${HTTP_CODE}" -ne "200" -o "${VULNS_AVAILABLE}" != true ]
 do
 	echo "Retrying after 10 seconds..."
 	sleep 10
@@ -125,5 +125,5 @@ do
 done
 
 EVAL_RESULT=$(jq -f jq_filter.txt ${IMAGE_ID}.json)
-echo $EVAL_RESULT
+echo ${EVAL_RESULT}
 
