@@ -26,7 +26,7 @@ EOLICENSE
 
 set -e
 
-if [[ $# -lt 4 ]]; then
+if [ $# -lt 4 ]; then
 	echo "All required arguments not provided."
 	echo "Syntax:"
 	echo "validate_image.sh <Qualys API Server> <Username> <Password> <Image Id|Name>"
@@ -48,7 +48,7 @@ get_result () {
 	CURL_COMMAND="$CURL -s -X GET ${GET_IMAGE_VULNS_URL} -u ${USERNAME}:${PASSWORD} -L -w\\n%{http_code} -o ${IMAGE_ID}.json"
 	HTTP_CODE=$($CURL_COMMAND | tail -n 1)
 	echo "HTTP Code: ${HTTP_CODE}"
-	if [[ "$HTTP_CODE" == "200" ]]; then
+	if [ "$HTTP_CODE" == "200" ]; then
 		check_vulns
 	fi
 }
@@ -101,7 +101,7 @@ DOCKER=$(which docker)
 
 check_image_input_type ${IMAGE}
 
-if [[ "${IMAGE_INPUT_TYPE}" == "NAME" ]]; then
+if [ "${IMAGE_INPUT_TYPE}" == "NAME" ]; then
 	echo "Input (${IMAGE}) is image name. Script will now try to get the image id."
 	get_image_id_from_name ${IMAGE}
 	echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
