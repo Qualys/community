@@ -13,7 +13,7 @@ This directory will contain sample scripts, that can be referred to/used in CI/C
 1. [jq](https://stedolan.github.io/jq/)
 2. curl
 3. docker
-4. Qualys Container Security CI/CD Sensor setup correctly
+4. Qualys Container Security CI/CD Sensor setup correctly. You might want to refer [Qualys Container Security User Guide](https://www.qualys.com/docs/qualys-container-sensor-deployment-guide.pdf) page numbers 11, 24 and 31. 
 
 ### Script and Input file
 
