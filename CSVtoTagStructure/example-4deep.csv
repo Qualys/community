@@ -1,0 +1,9 @@
+d4RootTag1,d4ChildTag1,d4ChildTag1-1,d4LeafTag1-1,192.168.0.0/24
+d4RootTag1,d4ChildTag1,d4ChildTag1-2,d4LeafTag1-2,192.168.1.0/24
+d4RootTag1,d4ChildTag2,d4ChildTag2-1,d4LeafTag2-1,192.168.2.0/25
+d4RootTag1,d4ChildTag2,d4ChildTag2-2,d4LeafTag2-2,192.168.3.0/25
+d4RootTag1,d4ChildTag3,d4ChildTag3-1,d4LeafTag3-1,192.168.2.128/25
+d4RootTag1,d4ChildTag3,d4ChildTag3-2,d4LeafTag3-2,192.168.3.128/26
+d4RootTag1,d4ChildTag4,d4ChildTag4-1,d4LeafTag4,192.168.3.192/26
+d4RootTag2,d4ChildTag5,d4ChildTag5-1,d4LeafTag5,10.0.0.0/17
+d4RootTag2,d4ChildTag6,d4ChildTag6-1,d4LeafTag6,10.128.0.0/17

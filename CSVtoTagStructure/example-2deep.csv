@@ -1,0 +1,9 @@
+d2Root1,d2LeafTag1,192.168.0.0/24
+d2Root1,d2LeafTag1,192.168.1.0/24
+d2Root1,d2LeafTag2,192.168.2.0/25
+d2Root1,d2LeafTag2,192.168.3.0/25
+d2Root1,d2LeafTag3,192.168.2.128/25
+d2Root1,d2LeafTag3,192.168.3.128/26
+d2Root1,d2LeafTag4,192.168.3.192/26
+d2Root2,d2LeafTag5,10.0.0.0/17
+d2Root2,d2LeafTag6,10.128.0.0/17
