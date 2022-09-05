@@ -21,6 +21,7 @@ US03        https://qualysguard.qg3.apps.qualys.com
 EU01        https://qualysguard.qualys.eu
 EU02        https://qualysguard.qg2.apps.qualys.eu
 IN01        https://qualysguard.qg1.apps.qualys.in
+UK01        https://qualysguard.qg1.apps.qualys.co.uk
 ``` 
 
 ## Configuration
