@@ -78,7 +78,8 @@ def podPicker(pod: str):
         'US03': 'https://qualysapi.qg3.apps.qualys.com',
         'EU01': 'https://qualysapi.qualys.eu',
         'EU02': 'https://qualysapi.qg2.apps.qualys.eu',
-        'IN01': 'https://qualysapi.qg1.apps.qualys.in'
+        'IN01': 'https://qualysapi.qg1.apps.qualys.in',
+        'UK01': 'https://qualysapi.qg1.apps.qualys.co.uk'
     }
     return switcher.get(pod, "invalid")
 
