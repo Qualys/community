@@ -55,7 +55,8 @@ get_result () {
 
 check_vulns () {
 	echo "Checking if vulns reported on ${IMAGE_ID}"
-	VULNS_ABSENT=$($JQ '.vulnerabilities==null' ${IMAGE_ID}.json)
+	#VULNS_ABSENT=$($JQ '.vulnerabilities==null' ${IMAGE_ID}.json)
+	VULNS_ABSENT=$($JQ '.lastScanned==null' ${IMAGE_ID}.json)
 	if [[ "$VULNS_ABSENT" == "true" ]]; then
 		VULNS_AVAILABLE=false
 	else
