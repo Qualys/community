@@ -38,6 +38,8 @@ QUALYS_API_SERVER=$1
 USERNAME=$2
 PASSWORD=$3
 IMAGE=$4
+TIMEOUT=$5
+: ${TIMEOUT:=600}
 
 check_command_exists () {
 	hash $1 2>/dev/null || { echo >&2 "This script requires $1 but it's not installed. Aborting."; exit 1; }
@@ -54,15 +56,15 @@ get_result () {
 }
 
 check_vulns () {
-	echo "Checking if vulns reported on ${IMAGE_ID}"
-	#VULNS_ABSENT=$($JQ '.vulnerabilities==null' ${IMAGE_ID}.json)
-	VULNS_ABSENT=$($JQ '.lastScanned==null' ${IMAGE_ID}.json)
-	if [[ "$VULNS_ABSENT" == "true" ]]; then
+	  echo "Checking if vulns reported on ${IMAGE_ID}"
+	  #VULNS_ABSENT=$($JQ '.vulnerabilities==null' ${IMAGE_ID}.json)
+	  VULNS_ABSENT=$($JQ '.lastScanned==null' ${IMAGE_ID}.json)
+	  if [[ "$VULNS_ABSENT" == "true" ]]; then
 		VULNS_AVAILABLE=false
-	else
+	   else
 		VULNS_AVAILABLE=true
-	fi
-	echo "Vulns Available: ${VULNS_AVAILABLE}"
+	 fi
+	 echo "Vulns Available: ${VULNS_AVAILABLE}" 
 }
 
 check_image_input_type () {
@@ -118,15 +120,22 @@ echo "Temporarily tagging image ${IMAGE} with qualys_scan_target:${IMAGE_ID}"
 echo "Qualys Sensor will untag it after scanning. In case this is the only tag present, Sensor will not remove it."
 `docker tag ${IMAGE_ID} qualys_scan_target:${IMAGE_ID}`
 
+echo -e "\n=-=-Configured TIME_OUT in second :$TIMEOUT-=-=-\n"
 get_result
-
-while [ "${HTTP_CODE}" -ne "200" -o "${VULNS_AVAILABLE}" != true ]
+wait_period=0
+while [ "${HTTP_CODE}" -ne "200" -o "${VULNS_AVAILABLE}" != true ] && [[ $wait_period -lt $TIMEOUT ]]
 do
 	echo "Retrying after 10 seconds..."
-	sleep 10
+	sleep 10s
+	wait_period=$(($wait_period+10))
 	get_result
 done
-
+if [ $wait_period = $TIMEOUT ]
+then
+	echo "Vulnerabilities processing took  more time than configured time:$TIMEOUT second"
+	echo "Please check the sensor logs OR QUALYS cloud platform status(https://status.qualys.com/)"
+	exit 1
+fi
 EVAL_RESULT=$(jq -f jq_filter.txt ${IMAGE_ID}.json)
 echo ${EVAL_RESULT}
 
