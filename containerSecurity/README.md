@@ -38,20 +38,22 @@ First thing first. Decide a criteria to evaluate your docker image. It could be 
 
 #### Executing script
 
-The script requires 4 arguments:
+The script requires 4 arguments and TOTAL_TIME optional:
+TOTAL_TIME --> if you not pass TOTAL_TIME value it will take default value as 600 second. total_time treated as script time out in case vulnerbilites processing taking more time by sensor or qualys cloud platform.
 
 1. Qualys API Server URL
 2. Qualys API Username
 3. Qualys API Password
 4. Image Id/Image Name
+5. TOTAL_TIME (Pass total time in second ex: TOTAL_TIME=300)
 
 In CI/CD pipeline, execute this script with correct arguments **after** you build your docker image, and **before** you push it to registry. Make sure you aren't deleting the image before this script executes.
 
-`./validate_image.sh ${QUALYS_API_SERVER} ${USERNAME} ${PASSWORD} ${DOCKER_IMAGE_ID}`
+`./validate_image.sh ${QUALYS_API_SERVER} ${USERNAME} ${PASSWORD} ${TOTAL_TIME}`
 
 OR
 
-`./validate_image.sh ${QUALYS_API_SERVER} ${USERNAME} ${PASSWORD} ${DOCKER_IMAGE_NAME}`
+`./validate_image.sh ${QUALYS_API_SERVER} ${USERNAME} ${PASSWORD} ${DOCKER_IMAGE_NAME} ${TOTAL_TIME}`
 
 ***It is recommended that you set those arguments as build/environment variables.*** A [sample Jenkinsfile](https://github.com/Qualys/community/blob/master/containerSecurity/Jenkinsfile_validate_image_without_plugin.groovy) is provided as well for your reference.
 
