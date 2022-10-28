@@ -113,7 +113,7 @@ else
 fi
 
 echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
-GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.1/images/${IMAGE_ID}"
+GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.3/images/${IMAGE_ID}"
 echo ${GET_IMAGE_VULNS_URL}
 
 echo "Temporarily tagging image ${IMAGE} with qualys_scan_target:${IMAGE_ID}"
