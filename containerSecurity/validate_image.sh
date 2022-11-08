@@ -46,7 +46,7 @@ check_command_exists () {
 }
 
 get_token() {
-	TOKEN="$CURL -X POST ${QUALYS_API_SERVER} -H 'Content-Type: application/x-www-form-urlencoded' -d 'username=${USERNAME}&password=${PASSWORD}&token=true'"
+	TOKEN="$CURL -X POST ${QUALYS_API_SERVER} -H 'Content-Type: application/x-www-form-urlencoded' -d 'username=${USERNAME}&password=${PASSWORD}&token=true&permissions=true'"
 }
 
 get_result () {
