@@ -46,7 +46,7 @@ check_command_exists () {
 }
 
 get_token() {
-	TOKEN="$CURL -X POST ${QUALYS_API_SERVER} -H 'Content-Type: application/x-www-form-urlencoded' -d 'username=${USERNAME}&password=${PASSWORD}&token=true&permissions=true'"
+	TOKEN=$($CURL -X POST ${QUALYS_API_SERVER} -H 'Content-Type: application/x-www-form-urlencoded' -d 'username='${USERNAME}'&password='${PASSWORD}'&token=true&permissions=true')
 }
 
 get_result () {
@@ -119,7 +119,7 @@ else
 fi
 
 echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
-GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.3/images/${IMAGE_ID} -H 'accept: application/json' -H 'Authorization: Bearer ${TOKEN}'"
+GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.3/images/${IMAGE_ID} -H 'accept: application/json' -H 'Authorization: Bearer '${TOKEN}"
 echo ${GET_IMAGE_VULNS_URL}
 
 echo "Temporarily tagging image ${IMAGE} with qualys_scan_target:${IMAGE_ID}"
