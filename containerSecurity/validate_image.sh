@@ -45,6 +45,10 @@ check_command_exists () {
 	hash $1 2>/dev/null || { echo >&2 "This script requires $1 but it's not installed. Aborting."; exit 1; }
 }
 
+get_token() {
+	TOKEN=$($CURL -X POST ${QUALYS_API_SERVER} -H 'Content-Type: application/x-www-form-urlencoded' -d 'username='${USERNAME}'&password='${PASSWORD}'&token=true&permissions=true')
+}
+
 get_result () {
 	echo "Getting result for ${IMAGE_ID}"
 	CURL_COMMAND="$CURL -s -X GET ${GET_IMAGE_VULNS_URL} -u ${USERNAME}:${PASSWORD} -L -w\\n%{http_code} -o ${IMAGE_ID}.json"
@@ -102,6 +106,8 @@ CURL=$(which curl)
 JQ=$(which jq)
 DOCKER=$(which docker)
 
+get_token
+
 check_image_input_type ${IMAGE}
 
 if [ "${IMAGE_INPUT_TYPE}" == "NAME" ]; then
@@ -113,7 +119,7 @@ else
 fi
 
 echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
-GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.1/images/${IMAGE_ID}"
+GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.3/images/${IMAGE_ID} -H 'accept: application/json' -H 'Authorization: Bearer '${TOKEN}"
 echo ${GET_IMAGE_VULNS_URL}
 
 echo "Temporarily tagging image ${IMAGE} with qualys_scan_target:${IMAGE_ID}"
