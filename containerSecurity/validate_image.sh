@@ -53,7 +53,7 @@ get_token() {
 
 get_result () {
 	echo "Getting result for ${IMAGE_ID}"
-	CURL_COMMAND=$($CURL -k -s -X GET ${QUALYS_API_SERVER}/csapi/v1.3/images/${IMAGE_ID} -H 'accept: application/json' -H 'Authorization: Bearer '${TOKEN} -o ${IMAGE_ID}.json -w "%{http_code}")
+	CURL_COMMAND=$($CURL -k -s -X GET ${QUALYS_API_SERVER}/csapi/v1.3/images/${SHA} -H 'accept: application/json' -H 'Authorization: Bearer '${TOKEN} -o ${IMAGE_ID}.json -w "%{http_code}")
 	HTTP_CODE=$CURL_COMMAND
 	echo "HTTP Code: ${HTTP_CODE}"
 	if [ "$HTTP_CODE" == "200" ]; then
@@ -85,8 +85,10 @@ check_image_input_type () {
 }
 
 get_image_id_from_name () {
-	docker_command="$DOCKER inspect $1"
-	IMAGE_ID=$($docker_command | grep Id | grep -Po '"Id": *\K"[^"]*"' | sed 's/"//g' | cut -d: -f2)
+	docker_command="$DOCKER images $1"
+	echo ${docker_command}
+	IMAGE_ID=$($docker_command | head -2 | tail -1 | awk '{print $3}')
+	echo ${IMAGE_ID}
 
 	if [[ "${IMAGE_ID}" == "IMAGE" ]]; then
 		echo "Error! No image found by name $1"
@@ -113,13 +115,15 @@ check_image_input_type ${IMAGE}
 if [ "${IMAGE_INPUT_TYPE}" == "NAME" ]; then
 	echo "Input (${IMAGE}) is image name. Script will now try to get the image id."
 	get_image_id_from_name ${IMAGE}
-	echo "Image sha belonging to ${IMAGE} is: ${IMAGE_ID}"
+	echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
 else
 	IMAGE_ID=${IMAGE}
 fi
 
-echo "Image sha belonging to ${IMAGE} is: ${IMAGE_ID}"
+echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
 
+SHA=$(docker inspect $IMAGE_ID | grep Id | grep -Po '"Id": *\K"[^"]*"' | sed 's/"//g' | cut -d: -f2)
+echo "Image SHA belonging to ${IMAGE} is:${SHA}"
 echo "Temporarily tagging image ${IMAGE} with qualys_scan_target:${IMAGE_ID}"
 echo "Qualys Sensor will untag it after scanning. In case this is the only tag present, Sensor will not remove it."
 `docker tag ${IMAGE_ID} qualys_scan_target:${IMAGE_ID}`
