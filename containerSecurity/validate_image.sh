@@ -45,16 +45,10 @@ check_command_exists () {
 	hash $1 2>/dev/null || { echo >&2 "This script requires $1 but it's not installed. Aborting."; exit 1; }
 }
 
-get_token() {
-        echo "Generate Gateway Token for API Version:v1.3"  
-	TOKEN=$($CURL -k -X POST ''${QUALYS_API_SERVER}'/auth' -d 'username='${USERNAME}'&password='${PASSWORD}'&token=true&permissions=true' -s)
-	echo $TOKEN
-}
-
 get_result () {
 	echo "Getting result for ${IMAGE_ID}"
-	CURL_COMMAND=$($CURL -k -s -X GET ${QUALYS_API_SERVER}/csapi/v1.3/images/${IMAGE_ID} -H 'accept: application/json' -H 'Authorization: Bearer '${TOKEN} -o ${IMAGE_ID}.json -w "%{http_code}")
-	HTTP_CODE=$CURL_COMMAND
+	CURL_COMMAND="$CURL -s -X GET ${GET_IMAGE_VULNS_URL} -u ${USERNAME}:${PASSWORD} -L -w\\n%{http_code} -o ${IMAGE_ID}.json"
+	HTTP_CODE=$($CURL_COMMAND | tail -n 1)
 	echo "HTTP Code: ${HTTP_CODE}"
 	if [ "$HTTP_CODE" == "200" ]; then
 		check_vulns
@@ -85,8 +79,10 @@ check_image_input_type () {
 }
 
 get_image_id_from_name () {
-	docker_command="$DOCKER inspect $1"
-	IMAGE_ID=$($docker_command | grep Id | grep -Po '"Id": *\K"[^"]*"' | sed 's/"//g' | cut -d: -f2)
+	docker_command="$DOCKER images $1"
+	echo ${docker_command}
+	IMAGE_ID=$($docker_command | head -2 | tail -1 | awk '{print $3}')
+	echo ${IMAGE_ID}
 
 	if [[ "${IMAGE_ID}" == "IMAGE" ]]; then
 		echo "Error! No image found by name $1"
@@ -106,19 +102,19 @@ CURL=$(which curl)
 JQ=$(which jq)
 DOCKER=$(which docker)
 
-get_token
-
 check_image_input_type ${IMAGE}
 
 if [ "${IMAGE_INPUT_TYPE}" == "NAME" ]; then
 	echo "Input (${IMAGE}) is image name. Script will now try to get the image id."
 	get_image_id_from_name ${IMAGE}
-	echo "Image sha belonging to ${IMAGE} is: ${IMAGE_ID}"
+	echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
 else
 	IMAGE_ID=${IMAGE}
 fi
 
-echo "Image sha belonging to ${IMAGE} is: ${IMAGE_ID}"
+echo "Image id belonging to ${IMAGE} is: ${IMAGE_ID}"
+GET_IMAGE_VULNS_URL="${QUALYS_API_SERVER}/csapi/v1.1/images/${IMAGE_ID}"
+echo ${GET_IMAGE_VULNS_URL}
 
 echo "Temporarily tagging image ${IMAGE} with qualys_scan_target:${IMAGE_ID}"
 echo "Qualys Sensor will untag it after scanning. In case this is the only tag present, Sensor will not remove it."
