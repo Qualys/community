@@ -1,5 +1,4 @@
-All of the files in the subdirectoy are for deploying scanners automatically in very large environments.  Any questions please contact Jeff leggett at jleggett@qualys.com
-
+All of the files in the subdirectoy are for deploying scanners automatically in very large environments.  
 
 setupscanner.pl
 =============
